@@ -30,7 +30,7 @@ export class TokenService {
     this.ttl = ttl
   }
 
-  async sign(payload: any = {}) {
+  async sign(payload: any = {}): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       return jwt.sign(
         payload,
@@ -46,7 +46,7 @@ export class TokenService {
     })
   }
 
-  async verify(token: string) {
+  async verify(token: string): Promise<object> {
     return new Promise<any>((resolve, reject) => {
       return jwt.verify(
         token,
@@ -66,5 +66,9 @@ export class TokenService {
         }
       )
     })
+  }
+
+  decode(token: string): object {
+    return jwt.decode(token) as object
   }
 }

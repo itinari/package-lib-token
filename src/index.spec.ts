@@ -63,4 +63,17 @@ describe('TokenService', () => {
       return expect(promise).rejectedWith(TokenInvalidError)
     })
   })
+
+  describe('decode', () => {
+    it('should return payload', async () => {
+      const token = await tokenService.sign({foo: 'bar'})
+      const payload = tokenService.decode(token)
+      return expect(payload).have.property('foo', 'bar')
+    })
+
+    it('should return null', () => {
+      const payload = tokenService.decode('not-a-valid-token')
+      return expect(payload).null
+    })
+  })
 })
